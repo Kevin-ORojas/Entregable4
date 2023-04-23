@@ -8,15 +8,36 @@ import UsersList from "./components/UsersList";
 
 const BASE_URL = "https://users-crud.academlo.tech";
 
+const DEFAULT_VALUES = {
+  firt_name: "",
+  last_name: "",
+  email: "",
+  password: "",
+  birtday: "",
+  image_url: "",
+}
+
 function App() {
   const [users, setUsers] = useState([]);
   const [isUserIdToEdit, setisUserIdToEdit ] = useState()
   const [isShowForm, setIsShowForm] = useState(false);
 
-  const { register, handleSubmit, reset } = useForm();
+  const { register, handleSubmit, reset, formState: {errors} } = useForm();
 
   const submit = (data) => {
-    createUser(data);
+    if(!data.birthday){
+      data.birthday = null;
+    }
+
+    if(!data.image_url){
+      data.image_url = null;
+    }
+
+    if(isUserIdToEdit){
+      editUser(data)
+    } else{
+      createUser(data);
+    }
   };
 
   const createUser = (data) => {
@@ -48,6 +69,19 @@ function App() {
       .catch((err) => console.log(err));
   };
 
+  const editUser = (data) => {
+    const URL = BASE_URL + `/users/${isUserIdToEdit}/`;
+    axios
+      .patch(URL, data)
+      .then(() => {
+        getAllUsers();
+        reset(DEFAULT_VALUES);
+        setIsShowForm(!setIsShowForm);
+        setisUserIdToEdit();
+      })
+      .catch((err) => console.log(err));
+  }
+
   const getAllUsers = () => {
     const URL = BASE_URL + "/users/";
 
@@ -77,6 +111,7 @@ function App() {
         reset={reset}
         setisUserIdToEdit={setisUserIdToEdit}
         isUserIdToEdit={isUserIdToEdit}
+        errors={errors}
       />
       <Header setIsShowForm={setIsShowForm} />
       <UsersList users={users} deleteUser={deleteUser} handleClickEdit={handleClickEdit} />
