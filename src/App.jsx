@@ -15,27 +15,32 @@ const DEFAULT_VALUES = {
   password: "",
   birtday: "",
   image_url: "",
-}
+};
 
 function App() {
   const [users, setUsers] = useState([]);
-  const [isUserIdToEdit, setisUserIdToEdit ] = useState()
+  const [isUserIdToEdit, setisUserIdToEdit] = useState();
   const [isShowForm, setIsShowForm] = useState(false);
 
-  const { register, handleSubmit, reset, formState: {errors} } = useForm();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
 
   const submit = (data) => {
-    if(!data.birthday){
+    if (!data.birthday) {
       data.birthday = null;
     }
 
-    if(!data.image_url){
+    if (!data.image_url) {
       data.image_url = null;
     }
 
-    if(isUserIdToEdit){
-      editUser(data)
-    } else{
+    if (isUserIdToEdit) {
+      editUser(data);
+    } else {
       createUser(data);
     }
   };
@@ -80,7 +85,7 @@ function App() {
         setisUserIdToEdit();
       })
       .catch((err) => console.log(err));
-  }
+  };
 
   const getAllUsers = () => {
     const URL = BASE_URL + "/users/";
@@ -92,16 +97,16 @@ function App() {
   };
 
   const handleClickEdit = (data) => {
-    setIsShowForm((isShowForm) => !isShowForm) //se setea el estado con funcion callback/estado verdadero falso y estado en negacion verdadero
-    reset(data)
-    setisUserIdToEdit(data.id)
+    setIsShowForm((isShowForm) => !isShowForm); //se setea el estado con funcion callback/estado verdadero falso y estado en negacion verdadero
+    reset(data);
+    setisUserIdToEdit(data.id);
   };
 
   useEffect(() => {
     getAllUsers();
   }, []);
   return (
-    <main className="font-sans">
+    <main className="font-sans bg-black/40">
       <Modal
         register={register}
         handleSubmit={handleSubmit}
@@ -114,9 +119,25 @@ function App() {
         errors={errors}
       />
       <Header setIsShowForm={setIsShowForm} />
-      <UsersList users={users} deleteUser={deleteUser} handleClickEdit={handleClickEdit} />
+      <UsersList
+        users={users}
+        deleteUser={deleteUser}
+        handleClickEdit={handleClickEdit}
+      />
+
+      <footer className="flex gap-2 px- justify-center ">
+        <a target="_blank" rel="noopener noreferrer" href="https://github.com/NozoDev">
+          <i className="bx bxl-github text-4xl "></i>
+        </a>
+        <a target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/in/kevin-oswaldo-rojas-velandia-73a343241/">
+          <i className="bx bxl-linkedin text-4xl "></i>
+        </a>
+        <a target="_blank" rel="noopener noreferrer" href="https://www.instagram.com/kevinrojasxd/">
+          <i className="bx bxl-instagram text-4xl"></i>
+        </a>
+      </footer>
     </main>
   );
 }
 
-export default App;
+export default App;

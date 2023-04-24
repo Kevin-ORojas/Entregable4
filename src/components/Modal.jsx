@@ -9,7 +9,7 @@ const Modal = ({
   reset,
   setisUserIdToEdit,
   isUserIdToEdit,
-  errors
+  errors,
 }) => {
   const handleClickCloseModal = () => {
     setIsShowForm((isShowForm) => !isShowForm);
@@ -27,7 +27,7 @@ const Modal = ({
   return (
     <section
       className={`absolute top-0 left-0 bottom-0 
-    right-0 bg-black/40 flex justify-center items-center transition-opasity ${
+    right-0 bg-black/50 flex justify-center items-center transition-opasity ${
       isShowForm ? "opacity-100 visible" : "opacity-0 invisible"
     }`}
     >
@@ -102,10 +102,10 @@ const Modal = ({
             id="image_url"
             type="text"
             {...register("image_url", {
-                pattern: {
-                    value: /(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|gif|png|jpg|jpeg)/,
-                    message: "El formato de Url es invalida"
-                }
+              pattern: {
+                value: /(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|gif|png|jpg|jpeg)/,
+                message: "El formato de Url es invalida",
+              },
             })}
           />
           <span>{errors.image_url && errors.image_url.message}</span>
