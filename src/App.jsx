@@ -4,6 +4,7 @@ import Modal from "./components/Modal";
 import { useEffect, useState } from "react";
 import Header from "./components/Header";
 import { useForm } from "react-hook-form";
+import Swal from 'sweetalert2'
 import UsersList from "./components/UsersList";
 
 const BASE_URL = "https://users-crud.academlo.tech";
@@ -29,6 +30,8 @@ function App() {
     formState: { errors },
   } = useForm();
 
+
+
   const submit = (data) => {
     if (!data.birthday) {
       data.birthday = null;
@@ -43,6 +46,14 @@ function App() {
     } else {
       createUser(data);
     }
+
+    Swal.fire({
+      position: 'top-end',
+      icon: 'success',
+      title: 'Your work has been saved',
+      showConfirmButton: false,
+      timer: 1500
+    })
   };
 
   const createUser = (data) => {
@@ -63,6 +74,7 @@ function App() {
         setIsShowForm(!isShowForm);
       })
       .catch((err) => console.log(err));
+  
   };
 
   const deleteUser = (id) => {
@@ -104,6 +116,7 @@ function App() {
 
   useEffect(() => {
     getAllUsers();
+
   }, []);
   return (
     <main className="font-sans bg-black/40">

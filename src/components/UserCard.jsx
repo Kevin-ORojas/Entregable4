@@ -1,4 +1,5 @@
 const UserCard = ({ user , deleteUser, handleClickEdit }) => {
+
   return (
     <article className="border-[2px] py-2 rounded-xl">
       <div className="">

@@ -62,8 +62,7 @@ const Modal = ({
         </div>
         <div className="grid gap-1">
           <label className="text-xs font-semibold " htmlFor="email">
-            Correo
-          </label>
+            Correo<span className="text-red-500">*</span></label>
           <input
             className="border-[1px] rounded-sm bg-gray-100 p-1"
             id="email"
